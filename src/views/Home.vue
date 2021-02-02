@@ -1,18 +1,35 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<v-row class="text-center mt-5">
+
+  <v-col></v-col>
+  <v-col>
+    <v-btn color="error" @click="download">Descargar PDF</v-btn>
+  </v-col>
+
+  <v-col></v-col>
+
+</v-row>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+import docDefinition from "../Doc/myDoc";
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      docDefinition: docDefinition,
+    }
+  },
+  methods: {
+    download() {
+      pdfMake.createPdf(docDefinition).open();
+      // pdfMake.createPdf(docDefinition).download();
+    },
   }
 }
 </script>
